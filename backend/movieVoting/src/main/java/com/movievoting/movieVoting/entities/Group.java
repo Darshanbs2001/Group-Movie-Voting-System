@@ -1,13 +1,20 @@
 package com.movievoting.movieVoting.entities;
 
-import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @AllArgsConstructor
 @Getter
@@ -21,7 +28,10 @@ public class Group {
     private int groupId;
     private String Name;
     private String inviteCode;
-    @ManyToMany(mappedBy = "groups")
-    Set<User> users=new HashSet<>();
-
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User createdBy;
+    @OneToMany(mappedBy = "movieId")
+    private List<Movie> movies=new ArrayList<Movie>();
+   
 }

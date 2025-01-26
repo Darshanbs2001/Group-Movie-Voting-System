@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,21 +18,19 @@ import java.util.Set;
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    String userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int userId;
     @Column(nullable = false)
-    String userName;
+    private String userName;
     @Column(nullable = false)
-    String password;
+    private String password;
     @Column(nullable = false,unique = true)
     String email;
-    @ManyToMany
-    @JoinTable(name = "group_members",joinColumns=@JoinColumn(name="userId"),
-            inverseJoinColumns =
-            @JoinColumn(name="groupId") )
-    Set<Group> groups = new HashSet<>();
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "createdBy")
+    private List<Group> groups=new ArrayList<>();
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
-    List<Movie> movies=new ArrayList<>();
+    private List<Movie> movies=new ArrayList<>();
 
 }
