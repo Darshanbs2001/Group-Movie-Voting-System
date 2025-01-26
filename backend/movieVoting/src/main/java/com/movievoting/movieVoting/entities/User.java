@@ -16,8 +16,8 @@ import java.util.Set;
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    String userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer userId;
     @Column(nullable = false)
     String userName;
     @Column(nullable = false)

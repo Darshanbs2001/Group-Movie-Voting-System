@@ -17,9 +17,16 @@ public class UserController {
     UserService us;
 
     @PostMapping("/register")
-    public ResponseEntity<User> signUP(@RequestBody @Valid  UserDto user) {
-        System.out.println("controller:" + user);
+    public ResponseEntity<String> signUP(@RequestBody @Valid  UserDto user) {
+    	try {
+    		us.signUP(user.getEmail());
+    		return ResponseEntity.ok("you have sign up successfully using email:"+user.getEmail());
+    	}catch(RuntimeException e) {
+    		return ResponseEntity.status(400).body(e.getMessage());
+    	}
+    /*    System.out.println("controller:" + user);
         return ResponseEntity.ok(us.createUser(user));
+        */
     }
 
     @GetMapping("/signin")
