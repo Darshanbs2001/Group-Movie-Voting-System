@@ -18,8 +18,15 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int movieId;
     String tmdbId;
+    String title;
+    Double rating;
+    String description;
+    
     String customNotes;
     @ManyToOne
     @JoinColumn(name="userId")
     User user;
+    @ManyToOne
+    @JoinColumn(name="groupId")
+    Group group;
 }

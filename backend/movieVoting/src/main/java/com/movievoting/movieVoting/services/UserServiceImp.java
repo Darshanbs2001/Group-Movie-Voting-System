@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImp implements UserService{
+public abstract class UserServiceImp implements UserService{//added abstract because of unimplemented method 
     @Autowired
     ModelMapper mapper;
     @Autowired
