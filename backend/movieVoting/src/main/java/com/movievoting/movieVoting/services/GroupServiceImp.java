@@ -37,4 +37,21 @@ public class GroupServiceImp implements GroupService {
 		
 	}
 
+	public void addToGroup(int userId,int groupId) {
+		User user=ur.findById(userId).get();	
+	    Group group=gr.findById(groupId).get();
+	    group.getMembers().add(user);
+	    user.getMemberOfGroups().add(group);
+	    gr.save(group);
+	    ur.save(user);
+	    
+	}
+	public List<GroupDto> listOfGroup(){
+		return gr.findAll().stream().map(group->map.map(group, GroupDto.class)).toList();
+	
+	}
+	@Override
+	public List<User> listOfMembers(int id) {
+		return gr.memberOfGroup(id);
+	}
 }

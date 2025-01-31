@@ -5,9 +5,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.movievoting.movieVoting.services.UserService;
+import com.movievoting.movieVoting.services.UserServiceImp;
+
 @SpringBootApplication
 public class MovieVotingApplication {
-
+ 
 	@Bean
 	public ModelMapper getMapper(){
 		return new ModelMapper();

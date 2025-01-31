@@ -8,5 +8,5 @@ public interface UserService {
     public UserDto deleteUser(UserDto user);
     public UserDto updateUser(UserDto user);
     public User findByEmail(String email);
-	public User signUP(String email);
+	
 }
