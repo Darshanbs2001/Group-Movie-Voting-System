@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @AllArgsConstructor
 @ToString
 @Entity
+@Table(name="app_users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
