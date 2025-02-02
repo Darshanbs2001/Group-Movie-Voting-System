@@ -1,16 +1,21 @@
 package com.movievoting.movieVoting.services;
 
-import com.movievoting.movieVoting.dto.UserDto;
-import com.movievoting.movieVoting.entities.User;
-import com.movievoting.movieVoting.errors.UserNotFoundException;
-import com.movievoting.movieVoting.repos.UserRepo;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.movievoting.movieVoting.dto.UserDto;
+import com.movievoting.movieVoting.entities.User;
+import com.movievoting.movieVoting.errors.UserNotFoundException;
+import com.movievoting.movieVoting.repos.UserRepo;
+
 @Service
-public abstract class UserServiceImp implements UserService{//added abstract because of unimplemented method 
-    @Autowired
+public class UserServiceImp implements UserService{//added abstract because of unimplemented method 
+    
+
+	@Autowired
     ModelMapper mapper;
     @Autowired
     UserRepo ur;
@@ -35,5 +40,8 @@ public abstract class UserServiceImp implements UserService{//added abstract bec
     public User findByEmail(String email) {
         return ur.findByEmail(email).orElseThrow((()->new UserNotFoundException()));
 
+    }
+    public List<User> findAll(){
+    	return ur.findAll();
     }
 }

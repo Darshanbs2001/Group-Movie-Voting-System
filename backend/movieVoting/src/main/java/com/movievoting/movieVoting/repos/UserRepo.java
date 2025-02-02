@@ -1,10 +1,10 @@
 package com.movievoting.movieVoting.repos;
 
-import com.movievoting.movieVoting.entities.User;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.swing.text.html.Option;
-import java.util.Optional;
+import com.movievoting.movieVoting.entities.User;
 
 public interface UserRepo extends JpaRepository<User,Integer> {
 public Optional<User> findByEmail(String email);
