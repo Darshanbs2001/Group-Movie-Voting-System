@@ -27,12 +27,26 @@ public class UserServiceImp implements UserService{//added abstract because of u
     }
 
     @Override
-    public UserDto deleteUser(UserDto user) {
-        return null;
+    public boolean deleteUser(UserDto user) {
+        User foundUser=this.findByEmail(user.getEmail());
+        if(foundUser!=null){
+            ur.delete(foundUser);
+            return true;
+        }
+       return false;
+
     }
 
     @Override
     public UserDto updateUser(UserDto user) {
+        User foundUser=this.findByEmail(user.getEmail());
+        if(foundUser!=null){
+            foundUser.setEmail(user.getEmail());
+            foundUser.setPassword(user.getPassword());
+            foundUser.setUserName(user.getUserName());
+            return mapper.map(foundUser,UserDto.class);
+
+        }
         return null;
     }
 
