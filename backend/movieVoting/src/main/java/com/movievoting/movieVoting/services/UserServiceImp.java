@@ -52,7 +52,7 @@ public class UserServiceImp implements UserService{//added abstract because of u
 
     @Override
     public User findByEmail(String email) {
-        return ur.findByEmail(email).orElseThrow((()->new UserNotFoundException()));
+        return ur.findByEmail(email).orElseThrow((()-> new UserNotFoundException()));
 
     }
     public List<User> findAll(){
