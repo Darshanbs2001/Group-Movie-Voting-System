@@ -3,12 +3,13 @@ package com.movievoting.movieVoting.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Getter
 @Setter
@@ -17,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @ToString
 @Entity
 @Table(name="app_users")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer userId;
@@ -27,6 +28,8 @@ public class User {
     private String password;
     @Column(nullable = false,unique = true)
     String email;
+    @Column
+     boolean isAdmin=false;
     @JsonIgnore
     @OneToMany(mappedBy = "createdBy",fetch = FetchType.LAZY)
     private List<Group> groups=new ArrayList<>();
@@ -37,4 +40,23 @@ public class User {
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private List<Movie> movies=new ArrayList<>();
 
+
+
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<String> authorities=new HashSet<String>();
+        authorities.add("User");
+        if(isAdmin){
+          authorities.add("Admin");
+        }
+        return authorities.stream().map(role->new SimpleGrantedAuthority(role)).collect(Collectors.toSet());
+
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
 }

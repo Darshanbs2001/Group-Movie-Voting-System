@@ -2,8 +2,17 @@ package com.movievoting.movieVoting.services;
 
 import java.util.List;
 
+import com.movievoting.movieVoting.dto.LoginDto;
+import com.movievoting.movieVoting.response.LoginResponseDto;
+import com.movievoting.movieVoting.security.JwtService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.movievoting.movieVoting.dto.UserDto;
@@ -19,9 +28,18 @@ public class UserServiceImp implements UserService{//added abstract because of u
     ModelMapper mapper;
     @Autowired
     UserRepo ur;
+    @Autowired
+    AuthenticationManager manager;
+    @Autowired
+    UserDetailsService userDetailsService;
+    @Autowired
+    JwtService jwts;
+    @Autowired
+    PasswordEncoder encoder;
     @Override
     public User createUser(UserDto user) {
         User convertedUser=mapper.map(user,User.class);
+        convertedUser.setPassword(encoder.encode(convertedUser.getPassword()));
         System.out.println("service:"+convertedUser);
         return ur.save(convertedUser);
     }
@@ -56,6 +74,25 @@ public class UserServiceImp implements UserService{//added abstract because of u
 
     }
     public List<User> findAll(){
-    	return ur.findAll();
+        List<User> users=ur.findAll();
+    	System.out.println(users);
+        return users;
+
+    }
+    @Override
+    public LoginResponseDto loginUser(LoginDto login){
+        User u=ur.findByEmail(login.getEmail()).orElseThrow(()->new UserNotFoundException());
+        Authentication auth=manager.authenticate(new UsernamePasswordAuthenticationToken(
+                login.getEmail(),login.getPassword()
+        ));
+        String token;
+        if(auth.isAuthenticated()) {
+            token= jwts.generateToken(userDetailsService.loadUserByUsername(login.getEmail()));
+
+        }
+        else {
+            throw new UsernameNotFoundException("Invalid user");
+        }
+        return new LoginResponseDto(token, mapper.map(u,UserDto.class));
     }
 }

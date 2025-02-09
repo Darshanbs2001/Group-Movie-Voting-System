@@ -22,6 +22,7 @@ public class GroupController {
   @PostMapping("/create/userId")
   public ResponseEntity<GroupDto> createGroup(@RequestBody  GroupDto groupDto,@RequestParam(name="id",required = true) int userId) {
 	  System.out.println(groupDto.getName());
+
 	  return ResponseEntity.ok(gs.createGroup(groupDto, userId));
   }
   @GetMapping("/list")

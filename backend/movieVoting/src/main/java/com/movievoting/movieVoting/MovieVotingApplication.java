@@ -10,7 +10,7 @@ import com.movievoting.movieVoting.services.UserServiceImp;
 
 @SpringBootApplication
 public class MovieVotingApplication {
- 
+
 	@Bean
 	public ModelMapper getMapper(){
 		return new ModelMapper();
