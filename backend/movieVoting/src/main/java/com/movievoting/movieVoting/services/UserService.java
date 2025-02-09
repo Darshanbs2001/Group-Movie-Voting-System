@@ -6,9 +6,9 @@ import com.movievoting.movieVoting.entities.User;
 import com.movievoting.movieVoting.response.LoginResponseDto;
 
 public interface UserService {
-    public User createUser(UserDto user);
-    public boolean deleteUser(UserDto user);
-    public UserDto updateUser(UserDto user);
-    public User findByEmail(String email);
-	public LoginResponseDto loginUser(LoginDto login);
+     User createUser(UserDto user);
+    boolean deleteUser(UserDto user);
+    UserDto updateUser(UserDto user);
+    User findByEmail(String email);
+	LoginResponseDto loginUser(LoginDto login);
 }

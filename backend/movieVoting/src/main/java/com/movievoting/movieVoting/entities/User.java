@@ -46,7 +46,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<String> authorities=new HashSet<String>();
+        Set<String> authorities=new HashSet<>();
         authorities.add("User");
         if(isAdmin){
           authorities.add("Admin");

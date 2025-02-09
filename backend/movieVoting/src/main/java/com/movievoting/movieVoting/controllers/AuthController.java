@@ -3,7 +3,6 @@ package com.movievoting.movieVoting.controllers;
 import com.movievoting.movieVoting.dto.LoginDto;
 import com.movievoting.movieVoting.dto.UserDto;
 import com.movievoting.movieVoting.entities.User;
-import com.movievoting.movieVoting.repos.UserRepo;
 import com.movievoting.movieVoting.response.LoginResponseDto;
 import com.movievoting.movieVoting.services.UserService;
 import jakarta.validation.Valid;
@@ -28,8 +27,5 @@ public class AuthController {
     public ResponseEntity<LoginResponseDto> signIn(@RequestBody LoginDto login){
         return new ResponseEntity<>(service.loginUser(login), HttpStatus.ACCEPTED);
     }
-    @GetMapping("/some")
-    public String hello(){
-        return "Hello";
-    }
+
 }
