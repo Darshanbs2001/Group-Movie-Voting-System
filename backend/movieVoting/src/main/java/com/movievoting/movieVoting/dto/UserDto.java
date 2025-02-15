@@ -4,12 +4,14 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 
 
 
 @Data
+@AllArgsConstructor
 public class UserDto {
     @NotEmpty(message = "Sorry user name cannot be empty")
     public String userName;

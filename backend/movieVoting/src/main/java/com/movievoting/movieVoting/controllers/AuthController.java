@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("auth")
 @RestController
 public class AuthController {
-    @Autowired
-    AuthenticationManager manager;
+
     @Autowired
     UserService service;
     @PostMapping("/register")

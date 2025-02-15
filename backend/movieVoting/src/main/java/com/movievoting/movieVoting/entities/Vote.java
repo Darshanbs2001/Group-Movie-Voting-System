@@ -6,31 +6,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class Movie {
+public class Vote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int movieId;
-    String tmdbId;
-    String title;
-    Double rating;
-    String description;
-    
-    String customNotes;
-    @ManyToOne
+    int voteId;
+    @Column
+    private boolean vote;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="movieId")
+    Movie movie;
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="userId")
     User user;
     @ManyToOne
     @JoinColumn(name="groupId")
     Group group;
-    @OneToMany(mappedBy = "movie",fetch =FetchType.EAGER)
-    Set<Vote> votes=new HashSet<Vote>();
 
 }

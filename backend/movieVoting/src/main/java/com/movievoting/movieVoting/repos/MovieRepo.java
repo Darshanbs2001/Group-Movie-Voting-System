@@ -11,4 +11,5 @@ import com.movievoting.movieVoting.entities.User;
 public interface MovieRepo extends JpaRepository<Movie,Integer> {
 	public List<Movie> findAllByUser( User user);
 	public List<Movie> findAllByGroup(Group group);
+
 }

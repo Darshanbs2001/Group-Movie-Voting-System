@@ -43,4 +43,12 @@ public class MovieServiceImp implements MoviesServices {
 		 return mr.findAllByUser(user).stream().map(movie->map.map(movie, MovieDto.class)).toList();
 	}
 
+	@Override
+	public boolean removeMovie(int id) {
+		if(mr.existsById(id)) {
+			mr.deleteById(id);
+			return true;
+		}
+		return false;
+	}
 }
