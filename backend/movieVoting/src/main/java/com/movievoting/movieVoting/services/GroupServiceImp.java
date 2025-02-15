@@ -113,15 +113,15 @@ public class GroupServiceImp implements GroupService {
 	public List<MovieWithVotes> getMovies(int groupId){
 		List<Movie> movies=gr.findById(groupId).orElseThrow(()->new GroupNotFoundException()).getMovies();
 		List<MovieWithVotes> votes=new ArrayList<>();
-		int count;
+		long count=0;
 		for(Movie movie: movies){
-		 	count=vr.findTrueVotes(movie.getMovieId());
+		 	 count=vr.findTrueVotes(movie.getMovieId());
 			 MovieWithVotes m=new MovieWithVotes();
 			 m.setMovieId(movie.getMovieId());
 			 m.setTitle(movie.getTitle());
 			 m.setRating(movie.getRating());
 			 m.setDescription(movie.getDescription());
-			 m.setVoteCount(count);
+			 m.setVoteCount((int)(count));
 		}
 		return votes;
 	}
