@@ -1,19 +1,35 @@
 package com.movievoting.movieVoting.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 
 
 public class GroupDto {
-
+    private int groupId;
 	@NotBlank
 	private String name;
+	private String inviteCode;
 
 	public GroupDto(@NotBlank String name) {
 		super();
 		this.name = name;
+		this.inviteCode=null;
+	}
+
+	public String getInviteCode() {
+		return inviteCode;
+	}
+
+	public void setInviteCode(String inviteCode) {
+		this.inviteCode = inviteCode;
+	}
+
+	public int getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
 	}
 
 	public GroupDto() {

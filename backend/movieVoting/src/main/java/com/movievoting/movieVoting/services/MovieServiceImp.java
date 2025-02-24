@@ -2,6 +2,11 @@ package com.movievoting.movieVoting.services;
 
 import java.util.List;
 
+import com.movievoting.movieVoting.errors.GroupNotFoundException;
+import com.movievoting.movieVoting.errors.MovieNotFoundException;
+import com.movievoting.movieVoting.errors.UserNotFoundException;
+
+import org.apache.catalina.startup.UserConfig;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,15 +31,20 @@ public class MovieServiceImp implements MoviesServices {
 	 ModelMapper map;
 	@Override
 	public MovieDto addMovie(MovieDto moviedto,int userId,int groupId) {
-          Group group= gr.findById(groupId).get();
-          User user =ur.findById(userId).get();
+          Group group= gr.findById(groupId).orElseThrow(()->new GroupNotFoundException());
+          User user =ur.findById(userId).orElseThrow(()->new UserNotFoundException());
           Movie movie=map.map(moviedto, Movie.class);
           movie.setGroup(group);
           movie.setUser(user);
           mr.save(movie);
-          
+          group.getMovies().add(movie);
+          gr.save(group);
+          user.getMovies().add(movie);
+          ur.save(user);
+         
 		return map.map(movie, MovieDto.class);
 	}
+
 
 	@Override
 	public List<MovieDto> listMoviesByUserById(int id) {
@@ -44,11 +54,18 @@ public class MovieServiceImp implements MoviesServices {
 	}
 
 	@Override
-	public boolean removeMovie(int id) {
-		if(mr.existsById(id)) {
-			mr.deleteById(id);
-			return true;
-		}
-		return false;
+	public MovieDto removeMovie(int id) {
+		
+		Movie movie=mr.findById(id).orElseThrow(()->new MovieNotFoundException());
+		mr.delete(movie);
+		MovieDto copy=new MovieDto();
+		copy.setMovieId(movie.getMovieId());
+		copy.setTmdbId(movie.getTmdbId());
+		copy.setRating(movie.getRating());
+		copy.setCustomNotes(movie.getCustomNotes());
+		copy.setDescription(movie.getDescription());
+		copy.setTitle(movie.getTitle());
+		return copy;
+		
 	}
 }

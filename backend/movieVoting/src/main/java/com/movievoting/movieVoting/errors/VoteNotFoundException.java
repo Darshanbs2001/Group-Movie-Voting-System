@@ -1,8 +1,8 @@
 package com.movievoting.movieVoting.errors;
 
 public class VoteNotFoundException extends RuntimeException{
- String msg;
+ static String msg="Vote not found";;
  public VoteNotFoundException(){
-     this.msg="Vote not found";
+     super(msg);
  }
 }

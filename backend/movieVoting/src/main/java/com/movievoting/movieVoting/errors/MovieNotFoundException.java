@@ -1,8 +1,10 @@
 package com.movievoting.movieVoting.errors;
 
 public class MovieNotFoundException extends RuntimeException{
-    String msg;
+    static String msg="There are no movies with the specified details";
+    ;
     public MovieNotFoundException(){
-        this.msg="There are no movies with the specified details";
+        super(msg);
     }
+    
 }

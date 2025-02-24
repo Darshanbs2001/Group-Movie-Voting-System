@@ -61,7 +61,7 @@ public class AuthControllerTest {
     public void test_loginUser_Success() throws Exception {
         // Arrange
         LoginDto loginDto = new LoginDto("vinay@gmail.com", "password123");
-        LoginResponseDto loginResponseDto = new LoginResponseDto("mocked-jwt-token", new UserDto("Vinay", "password123", "vinay@gmail.com"));
+        LoginResponseDto loginResponseDto = new LoginResponseDto("mocked-jwt-token",1, "Vinay", "password123", flase,"vinay@gmail.com");
 
         when(userService.loginUser(Mockito.any(LoginDto.class))).thenReturn(loginResponseDto);
 

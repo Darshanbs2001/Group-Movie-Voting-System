@@ -11,7 +11,8 @@ import com.movievoting.movieVoting.repos.MovieRepo;
 import com.movievoting.movieVoting.repos.UserRepo;
 import com.movievoting.movieVoting.repos.VoteRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
+@Service
 public class VoteServiceImp implements VoteService {
 
     @Autowired
@@ -23,14 +24,18 @@ public class VoteServiceImp implements VoteService {
     @Override
     public Vote addVote(VoteDto vote) {
         Vote saveVote = new Vote();
-        if (this.findVoteByUserIdAndMovieId(vote.getUserId(),vote.getMovieId())) {
+        if (!this.findVoteByUserIdAndMovieId(vote.getUserId(),vote.getMovieId())) {
             User user=ur.findById(vote.getUserId()).orElseThrow(()->new UserNotFoundException());
             Movie movie=mr.findById(vote.getMovieId()).orElseThrow(()->new MovieNotFoundException());
             saveVote.setUser(user);
+            saveVote.setVote(true);
             saveVote.setMovie(movie);
             movie.getVotes().add(saveVote);
-            vr.save(saveVote);
+            saveVote=vr.save(saveVote);
             mr.save(movie);
+        }
+        else {
+        	//throw an error here
         }
         return saveVote;
     }
@@ -53,7 +58,7 @@ public class VoteServiceImp implements VoteService {
         Movie movie=mr.findById(movieId).orElseThrow(()->new MovieNotFoundException());
         for(Vote vote: movie.getVotes()){
            if(vote.getUser().getUserId()==userId){
-               return vote.isVote();
+               return true;
            }
         }
         return false;

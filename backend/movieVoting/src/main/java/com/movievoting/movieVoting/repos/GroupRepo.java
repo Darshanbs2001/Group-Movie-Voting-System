@@ -11,9 +11,10 @@ import com.movievoting.movieVoting.entities.Group;
 import com.movievoting.movieVoting.entities.User;
 
 public interface GroupRepo extends JpaRepository<Group,Integer> {
-	Optional<Group> findByCreatedBy(User user);
+	@Query("select g from Group g where g.createdBy.userId=:userId")
+	List<Group> findByCreatedBy(@Param(value = "userId")int userId);
 	
 	@Query("select u from Group g join g.members u where g.groupId=:gId")
 	public List<User> memberOfGroup(@Param("gId") int id);
-	
+	Optional<Group> findByInviteCode(String code);
 }

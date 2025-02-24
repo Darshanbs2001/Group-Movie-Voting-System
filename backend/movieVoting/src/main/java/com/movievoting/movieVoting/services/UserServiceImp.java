@@ -2,9 +2,6 @@ package com.movievoting.movieVoting.services;
 
 import java.util.List;
 
-import com.movievoting.movieVoting.dto.LoginDto;
-import com.movievoting.movieVoting.response.LoginResponseDto;
-import com.movievoting.movieVoting.security.JwtService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,10 +12,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.movievoting.movieVoting.dto.LoginDto;
 import com.movievoting.movieVoting.dto.UserDto;
+import com.movievoting.movieVoting.entities.Movie;
 import com.movievoting.movieVoting.entities.User;
 import com.movievoting.movieVoting.errors.UserNotFoundException;
+import com.movievoting.movieVoting.repos.MovieRepo;
 import com.movievoting.movieVoting.repos.UserRepo;
+import com.movievoting.movieVoting.response.LoginResponseDto;
+import com.movievoting.movieVoting.security.JwtService;
 
 @Service
 public class UserServiceImp implements UserService{//added abstract because of unimplemented method 
@@ -29,6 +31,8 @@ public class UserServiceImp implements UserService{//added abstract because of u
     @Autowired
     UserRepo ur;
     @Autowired
+    MovieRepo mr;
+    @Autowired
     AuthenticationManager manager;
     @Autowired
     UserDetailsService userDetailsService;
@@ -38,16 +42,20 @@ public class UserServiceImp implements UserService{//added abstract because of u
     PasswordEncoder encoder;
     @Override
     public User createUser(UserDto user) {
-        User convertedUser=mapper.map(user,User.class);
-        convertedUser.setPassword(encoder.encode(convertedUser.getPassword()));
+        //User convertedUser=mapper.map(user,User.class);
+        User convertedUser=new User();
+        convertedUser.setName(user.getName());
+        convertedUser.setEmail(user.getEmail());
+    	convertedUser.setPassword(encoder.encode(user.getPassword()));
         System.out.println("service:"+convertedUser);
         return ur.save(convertedUser);
     }
 
     @Override
-    public boolean deleteUser(UserDto user) {
-        User foundUser=this.findByEmail(user.getEmail());
+    public boolean deleteUser(int userId) {
+        User foundUser= ur.findById(userId).orElseThrow(()->new UserNotFoundException());
         if(foundUser!=null){
+        	
             ur.delete(foundUser);
             return true;
         }
@@ -61,7 +69,7 @@ public class UserServiceImp implements UserService{//added abstract because of u
         if(foundUser!=null){
             foundUser.setEmail(user.getEmail());
             foundUser.setPassword(user.getPassword());
-            foundUser.setUserName(user.getUserName());
+            foundUser.setName(user.getName());
             return mapper.map(foundUser,UserDto.class);
 
         }
@@ -93,6 +101,12 @@ public class UserServiceImp implements UserService{//added abstract because of u
         else {
             throw new UsernameNotFoundException("Invalid user");
         }
-        return new LoginResponseDto(token, mapper.map(u,UserDto.class));
+        LoginResponseDto loginResponseDto=new LoginResponseDto();
+        loginResponseDto.setJwt(token);
+        loginResponseDto.setUserId(u.getUserId());
+        loginResponseDto.setAdmin(u.isAdmin());
+        loginResponseDto.setUserName(u.getUsername());
+        loginResponseDto.setEmail(u.getEmail());
+        return loginResponseDto;
     }
 }

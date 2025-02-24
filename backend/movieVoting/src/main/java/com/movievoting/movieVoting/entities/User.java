@@ -23,7 +23,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer userId;
     @Column(nullable = false)
-    private String userName;
+    private String name;
     @Column(nullable = false)
     private String password;
     @Column(nullable = false,unique = true)
@@ -31,13 +31,13 @@ public class User implements UserDetails {
     @Column
      boolean isAdmin=false;
     @JsonIgnore
-    @OneToMany(mappedBy = "createdBy",fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "createdBy",fetch = FetchType.LAZY)
     private List<Group> groups=new ArrayList<>();
     @JsonIgnore
-    @ManyToMany(mappedBy = "members",fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "members",fetch = FetchType.LAZY,cascade =CascadeType.REMOVE )
     private Set<Group> memberOfGroups=new HashSet<>();
     @JsonIgnore
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user",fetch = FetchType.LAZY,orphanRemoval = true)
     private List<Movie> movies=new ArrayList<>();
 
 
@@ -54,9 +54,14 @@ public class User implements UserDetails {
         return authorities.stream().map(role->new SimpleGrantedAuthority(role)).collect(Collectors.toSet());
 
     }
-
     @Override
     public String getUsername() {
         return email;
     }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
 }
