@@ -8,11 +8,11 @@ function Error(){
     </div>
 }
 const PrivateRoute = ({children}) => {
-    const user_role="normal";
+    const user_role="admin";
   if(user_role==='admin'){
     return <>
     {children}
-    <ToastContainer/>
+    
     </>
   }
   else{

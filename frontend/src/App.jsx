@@ -7,13 +7,14 @@ import Login from './pages/components/Login'
 import { Route, Routes } from 'react-router-dom'
 import PrivateRoute from './pages/components/PrivateRoute'
 import SignUp from './pages/SignUp'
+import Sidebar from './pages/components/Sidebar'
+import Mypage from './pages/Mypage'
 function Home(){
-  return <div className="hello">
-    hello from the home
+  return <div >
+    <Sidebar/>
   </div>
 }
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <Routes>
@@ -24,6 +25,7 @@ function App() {
           </PrivateRoute>
         
       }/>
+      <Route path="/test" element={<Mypage/>}/>
       <Route path='/login' element={<Login/>}/>
       <Route path="/signup" element={<SignUp/>}/>
     </Routes>
