@@ -1,3 +1,5 @@
+
+import { userInfo } from '@/services/UserServices';
 import React from 'react'
 import { Outlet } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -8,12 +10,19 @@ function Error(){
     </div>
 }
 const PrivateRoute = ({children}) => {
-    const user_role="admin";
-  if(user_role==='admin'){
-    return <>
+    const isAdmin=async()=>{
+      const {admin}=await userInfo();
+      console.log(admin)
+      return admin;
+    }
+  if(isAdmin()===true){
+    
+    return(
+    <>
     {children}
     
     </>
+    )
   }
   else{
     return <Error/>;

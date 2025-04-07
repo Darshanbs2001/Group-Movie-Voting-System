@@ -14,6 +14,7 @@ const Sidebar = ({setOpen,isOpen}) => {
      <button className=" absolute md:hidden top-1 right-1"onClick={()=>{setOpen(false)}}>close</button>
      </div>
      {/*routes*/}
+
      
      <div className=" h-56 flex-col w-full ">
       <h2 className="font-extrabold">User</h2>
