@@ -9,3 +9,6 @@
     --font-inter: "Inter", "Times New Roman"; 
 
 }
+*{
+  box-sizing: border-box;
+}
