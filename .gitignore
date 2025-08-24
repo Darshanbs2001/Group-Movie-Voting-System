@@ -1,2 +1,6 @@
 fake
 version2
+frontend
+node_modules
+real-frontend/frontend/node_modules
+package*

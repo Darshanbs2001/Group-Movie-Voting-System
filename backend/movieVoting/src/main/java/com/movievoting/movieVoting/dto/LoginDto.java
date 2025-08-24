@@ -8,7 +8,7 @@ import lombok.*;
 public class LoginDto {
     @Email
     String email;
-    @Pattern(regexp =
+    @Pattern(message = "Password must meet the right criteria",regexp =
             "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\W)(?=.*\\d.*\\d.*\\d.*\\d.*\\d.*\\d.*\\d)[A-Za-z\\d\\W]{7,}$")
     String password;
 
