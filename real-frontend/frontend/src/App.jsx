@@ -11,7 +11,7 @@ function App() {
   return (
     <Routes>
       <Route path="login" element={<Login></Login>}/>
-      
+      <Route path="*" element={<p>sorry cannot seem to find the route </p>}/>
     </Routes>
   )
 }
