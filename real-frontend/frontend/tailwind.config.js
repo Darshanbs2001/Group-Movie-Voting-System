@@ -8,6 +8,7 @@ export default {
       color:{
         brand:{
           primary:'#F06269',
+          surface:'#870639'
         }
       }
     },
