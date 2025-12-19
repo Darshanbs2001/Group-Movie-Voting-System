@@ -5,6 +5,8 @@
 @theme {
   --color-primary: #F06269;
   --color-secondary: #870639;
+  --color-primary-400: #FFB3C6;
+  
   --color-tahiti: #3ab7bf;
   --color-bermuda: #78dcca;
     --font-inter: "Inter", "Times New Roman"; 
