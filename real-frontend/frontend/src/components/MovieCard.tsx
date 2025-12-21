@@ -1,22 +1,26 @@
 import React from 'react'
 import PlayIcon from '../assets/PlayIcon.png'
 type MoveDetails={
-    movieName:string,
-    rating:number,
+    id:number,
+    movieName?:string,
+    rating:string,
     imgUrl:string,
     releaseDate:string
 }
 const MovieCard: React.FC<MoveDetails> = ({movieName, rating, imgUrl, releaseDate}:MoveDetails) => {
-  return (
+  let displayNames=  new Intl.DisplayNames(["en"],{type:'language'})
+   let language =displayNames.of(rating) ;
+    return (
        <div className='m-1 mb-8 hover:cursor-pointer hover:scale-105 duration-300 group/movie relative '>
-            <div className="w-full h-[280px] relative  ">
-                <div className="img w-full h-full rounded-t-xl overflow-hidden">
-                    <img className='w-full h-full object-fill ' src={imgUrl} alt="movie image" />
+            <div className="w-full h-[280px] relative   ">
+                <div className="img w-full h-full rounded-t-xl overflow-hidden text-black">
+                 
+                    <img className='w-full h-full object-fill ' src={imgUrl} alt={movieName} />
                 </div>
-                <div className='w-18 flex items-center justify-center text-center absolute right-[-18px] top-[-18px] rounded-[50%] bg-primary'>
-                     <p className='font-mono w-full p-3 text-center font-extrabold text-xl text-primary-400 '>
+                <div className=' flex items-center justify-center text-center absolute left-[-15px] top-0 rounded-sm  bg-primary'>
+                     <p className='font-mono w-full p-1 text-center font-bold text-md text-primary-400 '>
                         {
-                            rating
+                         language
                         }
                      </p>
 

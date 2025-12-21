@@ -1,6 +1,6 @@
 export async function fetchMovies(pageNumber=1){
     try{
-      let data=await fetch(`https://api.themoviedb.org/3/movie/upcoming?page=${pageNumber}`,
+      let data=await fetch(`https://api.themoviedb.org/3/movie/upcoming?page=${pageNumber}&language=en-US`,
         {
             headers:{
                 authorization:`Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlNTdhOGJiNDZlOTE0ZmQ5NTdjOTBkNzQ3OTllZmY3NiIsIm5iZiI6MTczNDg0NDI1My4zLCJzdWIiOiI2NzY3OWY1ZDhjYTUzY2M2YTc1ZTMwZmQiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.dxDbu2mU68DiD0dSRUkNzWuExxRc6RjQeqLWiPB2ius`
@@ -15,3 +15,15 @@ export async function fetchMovies(pageNumber=1){
         console.log(err);
     }
 }
+export function getPages(totalPages,currentPage){
+     const pages=[];
+     if(currentPage>1)
+     pages.push(currentPage-1);
+     for(let i=0;i<3;i++){
+        if(currentPage+i<=totalPages)
+        pages.push(currentPage+i);
+     }
+     if(currentPage===1)
+        pages.push(currentPage+3);
+     return pages;
+    }

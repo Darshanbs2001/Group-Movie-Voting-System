@@ -14,10 +14,10 @@ const Navbar = () => {
             </div>
             <div className='hidden  md:block'>
                 <ul className='font-inter cursor-pointer text-[24px] flex justify-between gap-6 '>
-                    <NavLink  to={"/"} className={({isActive})=>isActive?"font-bold":" hover:text-primary/30 delay-60 ease-in-out"}>Movies</NavLink>
+                    <NavLink  to={"/"} className={({isActive})=>isActive?"font-bold":"hover:bg-primary/20  px-2  rounded-2xl hover:text-primary/70 delay-130 ease-in-out"}>Movies</NavLink>
                    
-                    <NavLink  to={"/groups"} className={({isActive})=>isActive?"font-bold":" hover:text-primary/30 delay-60 ease-in-out"}>Groups</NavLink>
-                    <NavLink  to={"/tickets"} className={({isActive})=>isActive?"font-bold":" hover:text-primary/30 delay-60 ease-in-out"}>Tickets</NavLink>
+                    <NavLink  to={"/groups"} className={({isActive})=>isActive?"font-bold":"hover:bg-primary/20  px-2 rounded-2xl hover:text-primary/70 delay-130 ease-in-out"}>Groups</NavLink>
+                    <NavLink  to={"/tickets"} className={({isActive})=>isActive?"font-bold":"hover:bg-primary/20  px-2 rounded-2xl hover:text-primary/70 delay-130 ease-in-out"}>Tickets</NavLink>
                     
                 </ul>
 
